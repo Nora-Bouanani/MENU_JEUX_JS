@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="congrats.css">
+    <link rel="icon" href="../astronomie/img/icone1.png">
+    <title>Four pictures one word</title>
+</head>
+<body style="height: 100%;">
+<div style="height: 100%;" class="outer">
+    <div class="header middle" align="center">
+        <div class="inner">
+            <br>
+			<h1>Félicitations, vous avez terminé le jeu !</h1>
+                <p id="pointsGagnes"></p>
+            
+
+            <form action="../accueil.html" method="POST">
+                <button type="submit" id="btn">Recommencer</button>
+            </form><br>
+        </div>
+    </div>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const pointsGagnes = urlParams.get('points');
+
+    if (pointsGagnes !== null) {
+    const pointsElement = document.getElementById('pointsGagnes');
+    console.log("balbajknjezhdgzhd" +pointsGagnes);
+    pointsElement.textContent = `Vous avez gagné ${pointsGagnes} points !`;
+    } else {
+    console.log("Le paramètre 'points' est manquant ou invalide dans l'URL.");
+    }
+</script>
+
+<script src="../pays/js/imagefullsize.js"></script>
+<script src="../pays/js/pays.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+
+
+Ce document texte est destiné à Safina et Donika
+
+1)creer dossier avec le nom de votre jeux, ce dossier doit contenir:
+        -jeux.js
+        -jeux.html
+        -jeux.css
+    (vous pouvez ajouter d'autres pages html et images dans VOTRE dossier)
+
+2)Dans vue/index.html:
+    -rajouter un script de votre jeux.js
+    -modifier le lien vers votre jeux.html
+    (Ne modifier RIEN d'autres)
+
+3)NE RIEN MODIFIER DANS VUE/LOGIN.html ET VUE/SIGNUP.html NI STYLE NI images
+
+4)Dans le model/fonctions_BDD.php:
+    -Rajouter une fonction saveProgressSnake et saveProgressMasterMind (permet de sauvegarder les données de votre jeux dans la BDD)
+    -Rajouter une fonction recupererProgressSnake et recupererProgressMastermind (permet de recuperer les données de votre jeux dans la BDD)
+    (Ne modifier RIEN d'autres)
+
+5)Dans js:
+    -Rajouter un script de votre jeux.js
+    (Ne modifier RIEN d'autres)
+
+6)Dans Controleur:
+    -Rajouter un saveProgressMasterMind.php et saveProgressSnake.php (permet de sauvegarder les données entre JS et BDD de votre jeux )
+    -Rajouter un recupererProgressMastermind.php et recupererProgressSnake.php (permet de recuperer les données entre JS et BDD de votre jeux )
+    (Ne modifier RIEN d'autres)
+
+7)Dans extra/grouped.sql:
+    -Dans le fichier SQL,rajouter les tables et etc de vos jeux
+    (Ne modifier RIEN d'autres)

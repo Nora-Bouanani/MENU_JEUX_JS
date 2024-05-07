@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" href="css/astronomie.css">
+		<link rel="icon" href="img/icone1.png">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="../utility.js"></script>
+		<title>Quatres images un mot</title>
+	</head>
+	<body>
+		
+		<a class="retour_menu" href="../accueil.html"><img class="img_porte" src="./img/exit.png"></a>
+
+		<div id="points-container">
+			<img src="img/piece.png" class="coin-img"  alt="pièce">
+			<span id="points">Points : 0</span>
+		</div>
+		
+
+		<div align="center">
+			<div style="width: 80%;">
+
+				<div id="fullimagediv" style="position: relative;">
+					<button class="btn btn-success" id="gobackbutton" onclick="goback()" style="position: absolute; left: 10%; top: 2%;">
+						Go back
+					</button>
+					<img src="" id="fullimage">
+				</div>
+
+				<div id="smallimages">
+					
+				</div>
+
+				<div id="blanks" style="width: 100%;">
+				</div>
+
+				<div id="hintbouton">
+				</div>
+
+				<div id="letters" style="width: 80%;">
+					
+				</div>
+			</div>
+		</div>
+		<script src="js/imagefullsize.js"></script>
+		<script src="js/astronomie.js"></script>
+		<script>
+			$(document).ready(function() {
+				main();
+			})
+		</script>
+	</body>
+</html>
