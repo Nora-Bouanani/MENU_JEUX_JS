@@ -1,44 +1,61 @@
 
-function saveProgress4img(theme,totalPoints){
-    console.log("test");
-    axios({
-        method: 'POST',
+function saveProgress4img(theme,totalPoints)
+{
+
+    $.ajax({
         url: '../../Controleur/saveProgress4img.php',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({
+
+        type: 'POST',
+        
+        data: 
+        {
             "totalPoints": totalPoints,
             "theme": theme
-        })
-    }).then(response => {
-        console.log('Réponse du serveur :', response.data);
-    }).catch(error => {
-        console.error('Erreur lors de la sauvegarde :', error);
-    });
-      
-}
+        },
+        
+        success: (data) => {
+            let response = JSON.parse(data);
+            if (response.code === 200) 
+                console.log('Réponse du serveur (save):', response);
+        },
 
-
-function recupererProgress4img() {
-    console.log("test de récupération des données");
-    axios.get('../../Controleur/recupererData4img.php')
-    .then(response => {
-        console.log('Réponse du serveur :', response.data);
-        if (response.data.status === 'success' && response.data.data.length > 0) {
-            // Supposons que le serveur renvoie un objet avec les propriétés 'level' et 'points' dans un tableau
-            const data = response.data.data[0];
-            const theme = data.theme;
-            const totalPoints = data.points;
-            //sessionStorage.setItem("totalPoints", totalPoints);
-            console.log(data);
-            console.log(`Score mis à jour: ${totalPoints}, Niveau mis à jour: ${theme}`);
-        } else {
-            console.error('Erreur lors de la récupération des données: ', response.data.message);
+        error: (jqXHR, status, erreur) => {
+            console.error('Erreur lors de la sauvegarde :', erreur);
+            console.error('Statut de la requête :', status);
+            console.error('Réponse du serveur :', jqXHR.responseText);
         }
-    })
-    .catch(error => {
-        console.error('Erreur lors de la communication avec le serveur :', error);
     });
 }
 
+
+function recupererProgress4img()  
+{
+
+    $.ajax(
+    {
+        url: '../../Controleur/recupererData4img.php',
+
+        type: 'GET',
+
+        dataType: 'json',
+
+        success: function(response) 
+        {
+            console.log('Réponse du serveur (recup):', response);
+            if (response.status === 'success' && response.data.length > 0) 
+            {
+                const data = response.data.data[0];
+                const theme = data.theme;
+                const totalPoints = data.points;
+            } 
+            else 
+            {
+                console.error('Erreur lors de la récupération des données: ', response.message);
+            }
+        },
+        error: function(xhr, status, error) 
+        {
+            console.error('Erreur lors de la communication avec le serveur:', error);
+        }
+    });
+}
