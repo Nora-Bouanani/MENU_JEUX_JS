@@ -1,5 +1,8 @@
 <?php
 
+/*------MENU-------------*/
+
+
 //FCT qui permet de se connecter a la base de donnee
 function connexionBDD()
 {
@@ -10,6 +13,8 @@ function connexionBDD()
 
     return mysqli_connect($host,$user,$pwd,$bdd);//Permet de connecter la bdd avec le user et pwd
 }
+
+
 //FCT qui permet de se connecter au site (verifie que l'utilisateur et le mot de passe sont correct)
 function verifConnexion($login,$pwd)
 {
@@ -52,7 +57,9 @@ function verifConnexion($login,$pwd)
 
 }
 
-function get_data($login)   //Get data permet de retourner un tableau associatif contenant les informations de l'utilisateur
+
+//FCT qui permet de retourner un tableau associatif contenant les informations de l'utilisateur
+function get_data($login)   
 {
     $login=htmlentities($login); //convertit les entités HTML pour qu'elles ne soient pas interprétées comme du code HTML 
     $connexion=connexionBDD();
@@ -69,6 +76,8 @@ function get_data($login)   //Get data permet de retourner un tableau associatif
     }
 }
 
+
+//FCT qui verifie si le login est existant
 function checklogin($login) 
 {
     $login=htmlentities($login);
@@ -98,6 +107,8 @@ function checklogin($login)
     return $ok;
 }
 
+
+//FCT qui permet de s'inscrire a la bdd
 function inscriptionBDD($login,$password)
 {
     $login=htmlentities($login);    
@@ -125,11 +136,15 @@ function inscriptionBDD($login,$password)
 
 
 
-/* WORDLE */
+/*--------------- WORDLE---------------- */
 
-function save_wordle_progress($userId, $points, $level) {
-    $connexion = connexionBDD(); // Assurez-vous que cette fonction est bien définie pour ouvrir une connexion à votre base de données
-    if ($connexion) {
+//FCT qui permet de sauvegarder les donnees 
+function save_wordle_progress($userId, $points, $level) 
+{
+    $connexion = connexionBDD(); 
+
+    if ($connexion) 
+    {
         $stmt = mysqli_prepare($connexion, "INSERT INTO wordle_progress (user_id, level, points) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE level = VALUES(level), points = VALUES(points)");
         mysqli_stmt_bind_param($stmt, "iii", $userId, $level, $points);
         mysqli_stmt_execute($stmt);
@@ -139,11 +154,13 @@ function save_wordle_progress($userId, $points, $level) {
 }
 
 
-
-
-function recuperer_progressWordle($userId) {
+//FCT qui recupere les donnees depuis la bdd
+function recuperer_progressWordle($userId) 
+{
     $connexion = connexionBDD();
-    if ($connexion) {
+
+    if ($connexion) 
+    {
         $stmt = mysqli_prepare($connexion, "SELECT user_id, level, points FROM wordle_progress WHERE user_id = ?");
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
@@ -152,14 +169,20 @@ function recuperer_progressWordle($userId) {
         mysqli_close($connexion);
         return $resultat;
     }
-    return null; // Renvoyer null si la connexion échoue ou aucune donnée trouvée
+    return null; 
 }
 
-/* 4 IMG 1 MOT */
 
+
+/* ----------------4 IMG 1 MOT------------- */
+
+
+//FCT qui permet de sauvegarder les donnees 
 function saveProgress4img($userId, $theme, $points) {
-    $connexion = connexionBDD(); // Assurez-vous que cette fonction est bien définie pour ouvrir une connexion à votre base de données
-    if ($connexion) {
+    $connexion = connexionBDD();
+
+    if ($connexion) 
+    {
         $stmt = mysqli_prepare($connexion, "INSERT INTO 4img1mot_progress(user_id, theme, points) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE points = VALUES(points)");
         mysqli_stmt_bind_param($stmt, "isi", $userId, $theme, $points);
         mysqli_stmt_execute($stmt);
@@ -167,13 +190,16 @@ function saveProgress4img($userId, $theme, $points) {
         mysqli_close($connexion);
     }
 
-
 }
 
 
-function recupererProgress4img($userId) {
+//FCT qui recupere les donnees depuis la bdd
+function recupererProgress4img($userId) 
+{
     $connexion = connexionBDD();
-    if ($connexion) {
+
+    if ($connexion) 
+    {
         $stmt = mysqli_prepare($connexion, "SELECT user_id, theme, points FROM 4img1mot_progress WHERE user_id = ?");
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
@@ -182,7 +208,7 @@ function recupererProgress4img($userId) {
         mysqli_close($connexion);
         return $resultat;
     }
-    return null; // Renvoyer null si la connexion échoue ou aucune donnée trouvée
+    return null;
 }
 
 ?>

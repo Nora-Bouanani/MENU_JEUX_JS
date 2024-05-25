@@ -333,48 +333,68 @@ function revelerIndice()
 }
 
 
-function saveProgressWordle(niveauActuel,scoreActuel){
-    console.log("test");
-    axios({
-        method: 'POST',
+function saveProgressWordle(niveauActuel, scoreActuel)
+{
+
+    $.ajax({
         url: '../Controleur/saveProgressWordle.php',
-        headers: {
-            'Content-Type': 'application/json'
+
+        type: 'POST',
+        
+        data: 
+        {
+            'scoreActuel': scoreActuel,
+            'niveauActuel': niveauActuel
         },
-        data: JSON.stringify({
-            "scoreActuel": scoreActuel,
-            "niveauActuel": niveauActuel
-        })
-    }).then(response => {
-        console.log('Réponse du serveur :', response.data);
-    }).catch(error => {
-        console.error('Erreur lors de la sauvegarde :', error);
-    });
-      
-}
+        
+        success: (data) => {
+            let response = JSON.parse(data);
+            if (response.code === 200) 
+                console.log('Réponse du serveur (save):', response);
+        },
 
-
-
-function recuperProgressWordle() {
-    console.log("test de récupération des données");
-    axios.get('../Controleur/recupererDataWordle.php')
-    .then(response => {
-        console.log('Réponse du serveur :', response.data);
-        if (response.data.status === 'success' && response.data.data.length > 0) {
-            // Supposons que le serveur renvoie un objet avec les propriétés 'level' et 'points' dans un tableau
-            niveauActuel = response.data.data[0].level;
-            scoreActuel = response.data.data[0].points;
-
-            // Mettre à jour l'affichage du score et du niveau
-            afficherScore();
-            afficherNiveau();
-
-            console.log(`Score mis à jour: ${scoreActuel}, Niveau mis à jour: ${niveauActuel}`);
-        } else {
-            console.error('Erreur lors de la récupération des données: ', response.data.message);
+        error: (jqXHR, status, erreur) => {
+            console.error('Erreur lors de la sauvegarde :', erreur);
+            console.error('Statut de la requête :', status);
+            console.error('Réponse du serveur :', jqXHR.responseText);
         }
-    })
-    .catch(error => {
-        console.error('Erreur lors de la communication avec le serveur :', error);
     });
 }
+
+
+
+function recuperProgressWordle() 
+{
+
+    $.ajax(
+    {
+        url: '../Controleur/recupererDataWordle.php',
+
+        type: 'GET',
+
+        dataType: 'json',
+
+        success: function(response) 
+        {
+            console.log('Réponse du serveur (recup):', response);
+            if (response.status === 'success' && response.data.length > 0) 
+            {
+                niveauActuel = response.data[0].level;
+                scoreActuel = response.data[0].points;
+
+                afficherScore();
+                afficherNiveau();
+
+            } 
+            else 
+            {
+                console.error('Erreur lors de la récupération des données: ', response.message);
+            }
+        },
+        error: function(xhr, status, error) 
+        {
+            console.error('Erreur lors de la communication avec le serveur:', error);
+        }
+    });
+}
+

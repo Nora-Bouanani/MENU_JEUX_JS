@@ -12,12 +12,15 @@ $('#Form').submit((e) => {
 
     let errors = checkForm(loginInput.val(), passwordInput.val(), confirmationInput.val());
 
-    // Réinitialiser les messages d'erreur
+    // reinitialise les messages d'erreur
     messageBox.html('');
     
-    if (errors.length > 0) {
-        errors.forEach((error) => {
-            switch (error) {
+    if (errors.length > 0) 
+    {
+        errors.forEach((error) => 
+        {
+            switch (error) 
+            {
                 case 'InvalidLogin':
                     showLabelError(loginInput, 'Login doit contenir entre 8 et 30 caractères !');
                     break;
@@ -32,23 +35,32 @@ $('#Form').submit((e) => {
                     break;
             }
         });
-    } else {
-        // Effectuer l'enregistrement en Ajax
-        $.ajax({
+
+    } 
+    else 
+    {
+        $.ajax(
+        {
             url: "../Controleur/signup.php",
+
             type: 'POST',
-            data: {
+
+            data: 
+            {
                 'login': loginInput.val(),
                 'password': passwordInput.val()
             },
+
             success: (data) => {
                 console.log("Inscription réussie:", data);
                 window.location.href = "../vue/login.html";
             },
+
             error: (jqXHR) => {
                 console.log("Erreur lors de l'inscription", jqXHR);
                 let response = jqXHR.responseJSON;
-                if (response && response.code === 400) {
+                if (response && response.code === 400) 
+                {
                     messageBox.html('Login existant');
                 }
             }
@@ -56,13 +68,17 @@ $('#Form').submit((e) => {
     }
 });
 
-// Fonction pour vérifier les erreurs
-function checkForm(login, password, confirmation) {
+// verifie les erreurs
+function checkForm(login, password, confirmation) 
+{
     let errors = [];
 
-    if (!login || login.length < 8 || login.length > 30) {
+    if (!login || login.length < 8 || login.length > 30) 
+    {
         errors.push('InvalidLogin');
-    } else if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\#\!\_\-])[^\s]{8,30}$/.test(login)) {
+    } 
+    else if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\#\!\_\-])[^\s]{8,30}$/.test(login)) 
+    {
         errors.push('InvalidStringLogin');
     }
 
@@ -77,8 +93,9 @@ function checkForm(login, password, confirmation) {
     return errors;
 }
 
-// Fonction pour afficher les messages d'erreur
-function showLabelError(input, message) {
+// affiche messages d'erreur
+function showLabelError(input, message) 
+{
     input.addClass('error');
     let messageBox = $('#message-box');
     messageBox.append('<p class="error">' + message + '</p>').show();
